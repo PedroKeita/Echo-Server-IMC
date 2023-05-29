@@ -54,6 +54,7 @@ class App:
 
         return user_data
 
+    # Create a list of user data by filtering out empty values and converting numbers
     @classmethod
     def list_user_data(cls, values):
         my_list = []
@@ -65,13 +66,16 @@ class App:
                     my_list.append(float(i))
         return my_list
 
+    # validade the user data
     @classmethod
     def validate_data(cls, values):
         while True:
+            # tries to turn user data into a dict
             try:
                 my_list = App.list_user_data(values)
                 user_data = App.generate_dict(my_list)
 
+            # returns to collect user data if there are insufficient values
             except IndexError:
                 print()
                 print('Preencha todos os dados para prosseguir!'.upper())
@@ -79,6 +83,7 @@ class App:
                 App.generate_header()
                 values = App.collect_user_data()
 
+            # returns to collect user data if there are incorrect value types
             except ValueError:
                 print()
                 print('Valor inválido!'.upper())
@@ -86,6 +91,7 @@ class App:
                 App.generate_header()
                 values = App.collect_user_data()
 
+            # keeps user data in a list type
             else:
                 my_list = App.list_user_data(values)
                 break
@@ -93,6 +99,7 @@ class App:
         return my_list
 
     @classmethod
+    # turns a list into a dict
     def generate_dict(cls, my_list):
         dic = {'altura': None, 'peso': None, 'sexo': None, 'nvlAtiv': None, 'idade': None}
         cont = 0
@@ -103,6 +110,7 @@ class App:
         return dic
 
     @classmethod
+    # show the calculation result
     def print_result(cls, my_list):
         print()
         App.row()
@@ -111,7 +119,7 @@ class App:
         App.row()
 
     @classmethod
-    # (imc, status)
+    # shows the result for IMC
     def creat_table_imc(cls, imc, status):
         content = [['Tabela de IMC', 'Intervalo', ' Status'],
                    ['Menos do que: ', '18,5', 'Abaixo do Peso !'],
@@ -122,18 +130,22 @@ class App:
                    ['Mais do que: ', '40,0', 'Obesidade Grau 3!'],
                    ]
 
-        # analysingImc -> status
+        # store the result for user IMC
         result = [['SEU IMC: ', str(imc), status]]
         print()
+        # shows the IMC reference table
         for row in range(0, len(content)):
             App.row_table()
             print('|{:^25s}||{:^25s}||{:^25s}|'.format(content[row][0], content[row][1],
                                                        content[row][2]))
+            # prints the result for user values row == 6
             if row == 6:
                 App.row_table()
                 App.print_result(result)
 
     @classmethod
+
+    # shows de reference table for amount of calories
     def create_table_qtd_cal(cls, my_dict):
         content = [
             ["Carboidratos: ", my_dict["carboidratos"], round(float((my_dict["carboidratos"])) / 4.0, 2)],
@@ -148,8 +160,11 @@ class App:
             App.row_table()
 
     @classmethod
+    # manages the user choices: IMC, TBM, QTD KCAL and QUIT of the app
     def menu(cls, response):
         while True:
+
+            # get the user choice
             App.padding()
             print("=> Selecione uma opção: ")
             print()
@@ -158,6 +173,7 @@ class App:
             opt = input()
             App.padding()
 
+            # if opt == 1, the IMC is calculated and displayed
             if opt == "1":
                 App.title("IMC")
                 print()
@@ -167,6 +183,7 @@ class App:
                     "{:^81s}".format("indivíduo, o que pode interferir diretamente na sua saúde e qualidade de vida!"))
                 App.creat_table_imc(response["imc"], response["statusImc"])
 
+            # if opt == 2, the TMB is calculated and displayed
             elif opt == "2":
                 App.title("Taxa Metabólica Basal: ")
                 print()
@@ -178,6 +195,7 @@ class App:
                 result = [['RESULTADO :', 'SUA TMB:', str(response['tmb']) + " kcal"]]
                 App.print_result(result)
 
+            # if opt == 3, the QTD KCAL is calculated and displayed
             elif opt == "3":
                 nut = response["nutrientes"]
                 App.title("Quantidade de Calorias: ")
@@ -195,11 +213,13 @@ class App:
                 result = [['RESULTADO :', 'SUA QTD DE KCAL:', str(response['cal']) + " kcal"]]
                 App.print_result(result)
 
+            # if opt == 4, the client side app is closed
             elif opt == "4":
                 print('{:^79s}'.format("Obrigado por usar nosso App !"))
                 App.padding()
                 App.row()
                 break
 
+            # if opt is different from all above, displays a alert for user
             else:
                 print("Erro: Opção Inválida!")
