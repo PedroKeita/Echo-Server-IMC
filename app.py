@@ -38,7 +38,7 @@ class App:
         print('*{:^79s}*'.format(title))
         App.row()
 
-    # Prompt the user to enter data for analysis
+    #Prompt the user to enter data for analysis
     @classmethod
     def collect_user_data(cls):
         print("{:^16s}".format("Altura (m):"), end="")
