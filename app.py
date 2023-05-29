@@ -1,4 +1,6 @@
 class App:
+
+    # Display the title of the app and generate the header for data input
     def __init__(self):
         App.title("The shape of us!")
         print()
@@ -6,31 +8,37 @@ class App:
         print()
         App.generate_header()
 
+    # Add padding
     @classmethod
     def padding(cls):
         print()
         print()
 
+    # Generate the header with instructions for data input
     @classmethod
     def generate_header(cls):
         print("OBS: O Nivel de atividade varia de 1 (Sedentário) a 4 (Muito Ativo) !")
         print("Ex: {:^8s} {:^22s} {:^14s} {:^20s} {:^10s} ".format("1.70", "70.0", "M", "3", "20"))
         print()
 
+    # Print a row of asterisks
     @classmethod
     def row(cls):
         print('*' * 81)
 
+    # Print a row of hyphens for table formatting
     @classmethod
     def row_table(cls):
         print(f"+{'-' * 25}++{'-' * 25}++{'-' * 25}+")
 
+    # Display a title surrounded by rows of asterisks
     @classmethod
     def title(cls, title):
         App.row()
         print('*{:^79s}*'.format(title))
         App.row()
 
+    # Prompt the user to enter data for analysis
     @classmethod
     def collect_user_data(cls):
         print("{:^16s}".format("Altura (m):"), end="")
@@ -82,7 +90,7 @@ class App:
                 my_list = App.list_user_data(values)
                 break
 
-        return list
+        return my_list
 
     @classmethod
     def generate_dict(cls, my_list):
@@ -98,8 +106,8 @@ class App:
     def print_result(cls, my_list):
         print()
         App.row()
-        print('|{:^25s}||{:^25s}||{:^25s}|'.format(str(list[0][0]), str(list[0][1]),
-                                                   str(list[0][2])))
+        print('|{:^25s}||{:^25s}||{:^25s}|'.format(str(my_list[0][0]), str(my_list[0][1]),
+                                                   str(my_list[0][2])))
         App.row()
 
     @classmethod
